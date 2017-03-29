@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EntityMovable : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class EntityMovable : MonoBehaviour
 
     private UnityEngine.AI.NavMeshAgent _navMeshAgent;
     private bool _isMoving = false;
+    private List<Vector3> _listDestination = new List<Vector3>();
 
     // Use this for initialization
     void Awake ()
@@ -23,6 +25,14 @@ public class EntityMovable : MonoBehaviour
     public void ReceivedMoveOrder(bool eraseOrder, EntityBase destination)
     {
         //Penser à gérer la vision de l'entity, càd si entity not visible, stop movement
+        if (eraseOrder)
+        {
+            //When order list i
+        }
+        else
+        {
+            // add order to the orderlist - which needs to be created first
+        }
     }
 
     public void ReceivedMoveOrder(bool eraseOrder, Vector3 destination)

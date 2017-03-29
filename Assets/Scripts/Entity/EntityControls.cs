@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EntityControls : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class EntityControls : MonoBehaviour
 
     private bool _isSelected;
     private EntityBase _baseScript;
+    private List<OrderScript.OrderDatas> _listOders = new List<OrderScript.OrderDatas>();
 
     void Awake()
     {
