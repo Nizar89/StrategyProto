@@ -43,7 +43,7 @@ public class EntityControls : MonoBehaviour
     {
         if (datas._orderType == TypeOrder.Move)
         {
-
+            _baseScript._moveScript.ReceivedMoveOrder(datas._erasePreviousOrders, datas._posTarget);
         }
     }
 }

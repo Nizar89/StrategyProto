@@ -15,13 +15,12 @@ public class OrderScript : MonoBehaviour
         public bool _erasePreviousOrders = true;
     }
 
-    private OrderDatas _orderToSend;
+    private OrderDatas _orderToSend = new OrderDatas();
 
-    public void Initialise (float speed, EntityBase origin, EntityBase destination, EntityBase target) //if target is a unit
+    public void Initialise (float speed, EntityBase destination, EntityBase target) //if target is a unit
     {
         //specific value for the "bird"
         _speed = speed;
-        _entityOrigin = origin;
         _entityDestination = destination;
 
         //Value for the order itself
@@ -32,16 +31,16 @@ public class OrderScript : MonoBehaviour
         
     }
 
-    public void Initialise(float speed, EntityBase origin, EntityBase destination, Vector3 target) //if target is a unit
+    public void Initialise(float speed, EntityBase destination, Vector3 target) //if target is a unit
     {
         //specific value for the "bird"
         _speed = speed;
-        _entityOrigin = origin;
         _entityDestination = destination;
 
         //Value for the order itself
         _orderToSend._posTarget = target;
         _orderToSend._orderType = EntityControls.TypeOrder.Move;
+        //handle erase order here, based on if "shift" is pressed. Specific script to handle inputs
 
         StartCoroutine(MoveToEntity());
     }
@@ -56,6 +55,8 @@ public class OrderScript : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         //handle send orders
+        _entityDestination._controlScript.ReceivedNewOrder(_orderToSend);
+        Destroy(this.gameObject);
          
     }
 

@@ -27,7 +27,15 @@ public class PlayerBase : MonoBehaviour
 
     public void SendOrder(Vector3 destination)
     {
-        
+
+        GameObject movingOrder = Instantiate(_datas._prefabOrder, this.transform.position, Quaternion.identity);
+        OrderScript orderScript =  movingOrder.AddComponent<OrderScript>();
+        orderScript.Initialise(_datas._speedOrder,GameManager._instance._listEntitySelected[0],destination);
+    }
+
+    public void SendOrder(EntityBase target)
+    {
+
     }
 
 }
