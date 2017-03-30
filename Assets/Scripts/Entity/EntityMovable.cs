@@ -6,6 +6,7 @@ public class EntityMovable : MonoBehaviour
 {
     public float _speed;
 
+    private EntityBase _baseScript;
     private UnityEngine.AI.NavMeshAgent _navMeshAgent;
     private bool _isMoving = false;
     private List<Vector3> _listDestination = new List<Vector3>();
@@ -16,7 +17,8 @@ public class EntityMovable : MonoBehaviour
     void Awake ()
     {
         _navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-	}
+        _baseScript = GetComponent<EntityBase>();
+    }
 
     void Start()
     {

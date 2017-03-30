@@ -10,6 +10,10 @@ public class EntityBase : MonoBehaviour
     public EntityLife _lifeScript;
     public EntityMovable _moveScript;
 
+    public Renderer _unitRenderer;
+    public Material _matAllyTeam;
+    public Material _matEnemyTeam;
+
 
     // Use this for initialization
     void Awake ()
@@ -19,10 +23,14 @@ public class EntityBase : MonoBehaviour
 
     void Start ()
     {
+        //disable control script if not in the same team
         if (_team != PlayerBase._instance._team && _controlScript != null)
         {
             _controlScript.enabled = false;
         }
+
+        //set color. Behaviour might change with real model
+        SetColors();
     }
 	
 	// Update is called once per frame
@@ -30,4 +38,20 @@ public class EntityBase : MonoBehaviour
     {
 	
 	}
+
+    private void SetColors()
+    {
+        if (_team == PlayerBase._instance._team)
+        {
+            _unitRenderer.material = _matAllyTeam;
+        }
+        else if (_team != PlayerBase.ListTeam.None)
+        {
+            _unitRenderer.material = _matEnemyTeam;
+        }
+        else
+        {
+            //Dunno lol
+        }
+    }
 }

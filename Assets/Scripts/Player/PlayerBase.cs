@@ -7,7 +7,7 @@ public class PlayerBase : MonoBehaviour
 
     public PlayerDatas _datas;
 
-    public enum ListTeam { TeamA, TeamB };
+    public enum ListTeam { TeamA, TeamB, None };
     public ListTeam _team;
 
     public int _nbOrderLeft;
