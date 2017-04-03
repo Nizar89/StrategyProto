@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class EntityControls : MonoBehaviour
 {
     public enum TypeOrder { Move, Attack};
+    public GameObject _selectionFeedback;
 
     private bool _isSelected;
     private EntityBase _baseScript;
@@ -32,11 +33,13 @@ public class EntityControls : MonoBehaviour
     public void SelectUnit()
     {
         _isSelected = true;
+        _selectionFeedback.SetActive(true);
     }
 
     public void UnselectUnit()
     {
         _isSelected = false;
+        _selectionFeedback.SetActive(false);
     }
 
     public void ReceivedNewOrder(OrderScript.OrderDatas datas)

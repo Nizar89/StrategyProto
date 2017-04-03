@@ -39,7 +39,7 @@ public class EntityMovable : MonoBehaviour
         }
     }
 
-    public void ReceivedMoveOrder(bool eraseOrder, Vector3 destination)
+    public void ReceivedMoveOrder(bool eraseOrder, Vector3 destination) //this function should be called only when the order is active !²
     {
         //Penser à gérer la vision de l'entity, càd si entity not visible, stop movement
         if (eraseOrder)
