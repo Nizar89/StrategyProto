@@ -14,12 +14,15 @@ public class EntityBase : MonoBehaviour
     public Material _matAllyTeam;
     public Material _matEnemyTeam;
 
+    public UnityEngine.AI.NavMeshAgent _navMeshAgent;
+
+
 
     // Use this for initialization
     void Awake ()
     {
-	    
-	}
+        _navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+    }
 
     void Start ()
     {
