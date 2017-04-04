@@ -12,6 +12,7 @@ public class EntityAttack : MonoBehaviour
 
     private EntityBase _target;
     private EntityBase _baseScript;
+    private float _lastTimeAttack = Time.time;
     
 
     private void Awake()
@@ -26,11 +27,21 @@ public class EntityAttack : MonoBehaviour
 
     IEnumerator MoveAndAttack()
     {
-        while (Vector3.Distance(_target.transform.position, this.transform.position) > _distanceAttack)
+        while (_target != null && _target.isActiveAndEnabled) // should also stop if new order.
         {
-            if (_baseScript._navMeshAgent.destination != _target.transform.position)
+            //move to target
+            while (Vector3.Distance(_target.transform.position, this.transform.position) > _distanceAttack)
             {
-                _baseScript._navMeshAgent.SetDestination(_target.transform.position);
+                if (_baseScript._navMeshAgent.destination != _target.transform.position)
+                {
+                    _baseScript._navMeshAgent.SetDestination(_target.transform.position);
+                }
+                yield return new WaitForEndOfFrame();
+            }
+            //attack if possible
+            if ((Time.time - _lastTimeAttack) < _cooldownAttack)
+            {
+                Attack();
             }
             yield return new WaitForEndOfFrame();
         }
@@ -38,7 +49,11 @@ public class EntityAttack : MonoBehaviour
 
     private void Attack()
     {
-        //spawnEntity
+        if (_spawnProjectile)
+        {
+            GameObject projectile = GameObject.Instantiate(_projectile, this.transform.position, Quaternion.identity);
+            projectile.GetComponent<ProjectileBehavior>().Initialise(_target, _damage);
+        }
     }
 
 }
