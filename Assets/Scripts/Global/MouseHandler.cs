@@ -32,8 +32,7 @@ public class MouseHandler : MonoBehaviour
             RaycastHit[] hits;
             Ray ray = _mainCam.ScreenPointToRay(Input.mousePosition);
 
-            hits = Physics.RaycastAll(ray);
-            hits.OrderBy(h => h.distance).ToArray();
+            hits = Physics.RaycastAll(ray).OrderBy(h => h.distance).ToArray();
             foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.tag == ListTags._tagTerrain)

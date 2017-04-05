@@ -40,7 +40,7 @@ public class EntityAttack : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
             //attack if possible
-            if ((Time.time - _lastTimeAttack) < _cooldownAttack)
+            if ((Time.time - _lastTimeAttack) > _cooldownAttack) 
             {
                 _lastTimeAttack = Time.time;
                 Attack();

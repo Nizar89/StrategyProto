@@ -25,11 +25,15 @@ public class ProjectileBehavior : MonoBehaviour
         while (Vector3.Distance(this.transform.position,_target.transform.position) > _stopDistance)
         {
             this.transform.LookAt(_target.transform.position);
-            transform.Translate(this.transform.forward * _speed * Time.deltaTime);
+            Vector3 direction = _target.transform.position - this.transform.position;
+            direction.Normalize();
+            transform.Translate(this.transform.forward * _speed * Time.deltaTime, Space.World);
             yield return new WaitForEndOfFrame();
         }
-
+        
         this.transform.parent = _target.transform;
+        _target._lifeScript.SufferDamage(_damage);
         yield return new WaitForSeconds(_durationStuck);
+        Destroy(this.gameObject);
     }
 }
