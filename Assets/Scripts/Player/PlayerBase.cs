@@ -35,7 +35,12 @@ public class PlayerBase : MonoBehaviour
 
     public void SendOrder(EntityBase target)
     {
-
+        if (target._team != _team) // if enemy
+        {
+            GameObject attackOrder = Instantiate(_datas._prefabOrder, this.transform.position, Quaternion.identity);
+            OrderScript orderScript = attackOrder.AddComponent<OrderScript>();
+            orderScript.Initialise(_datas._speedOrder, GameManager._instance._listEntitySelected[0], target);
+        }
     }
 
 }

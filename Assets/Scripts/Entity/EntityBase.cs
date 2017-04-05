@@ -9,6 +9,7 @@ public class EntityBase : MonoBehaviour
     public EntityControls _controlScript;
     public EntityLife _lifeScript;
     public EntityMovable _moveScript;
+    public EntityAttack _attackScript;
 
     public Renderer _unitRenderer;
     public Material _matAllyTeam;
@@ -44,11 +45,11 @@ public class EntityBase : MonoBehaviour
 
     private void SetColors()
     {
-        if (_team == PlayerBase._instance._team)
+        if (_team == PlayerBase._instance._team) //if ally
         {
-            _unitRenderer.material = _matAllyTeam;
+            _unitRenderer.material = _matAllyTeam; 
         }
-        else if (_team != PlayerBase.ListTeam.None)
+        else if (_team != PlayerBase.ListTeam.None) // if not ally and not neutral (i.e. if ennemy)
         {
             _unitRenderer.material = _matEnemyTeam;
         }
@@ -56,5 +57,10 @@ public class EntityBase : MonoBehaviour
         {
             //Dunno lol
         }
+    }
+
+    public void DestroyEntity() //debug for now
+    {
+        Destroy(this.gameObject);
     }
 }

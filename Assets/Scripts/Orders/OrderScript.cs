@@ -31,7 +31,7 @@ public class OrderScript : MonoBehaviour
         
     }
 
-    public void Initialise(float speed, EntityBase destination, Vector3 target) //if target is a unit
+    public void Initialise(float speed, EntityBase destination, Vector3 target) //if target is a destination
     {
         //specific value for the "bird"
         _speed = speed;

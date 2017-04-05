@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 using System.Collections;
 
 public class MouseHandler : MonoBehaviour
@@ -26,18 +27,24 @@ public class MouseHandler : MonoBehaviour
 
     private void RightClickPressed()
     {
-        RaycastHit[] hits;
-        Ray ray = _mainCam.ScreenPointToRay(Input.mousePosition);
-
-        hits = Physics.RaycastAll(ray);
-
-        foreach (RaycastHit hit in hits)
+        if (GameManager._instance._listEntitySelected.Count > 0) // useless, for now, to send raycast if no unit is selected
         {
-            if (hit.collider.tag == ListTags._tagTerrain)
+            RaycastHit[] hits;
+            Ray ray = _mainCam.ScreenPointToRay(Input.mousePosition);
+
+            hits = Physics.RaycastAll(ray);
+            hits.OrderBy(h => h.distance).ToArray();
+            foreach (RaycastHit hit in hits)
             {
-                if (GameManager._instance._listEntitySelected.Count > 0)
+                if (hit.collider.tag == ListTags._tagTerrain)
                 {
                     _playerScript.SendOrder(hit.point);
+                    break;
+                }
+                else if (hit.collider.tag == ListTags._tagUnit)
+                {
+                    _playerScript.SendOrder(hit.collider.GetComponent<EntityBase>());
+                    break;
                 }
             }
         }

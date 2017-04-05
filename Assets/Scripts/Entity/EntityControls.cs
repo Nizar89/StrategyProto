@@ -48,5 +48,9 @@ public class EntityControls : MonoBehaviour
         {
             _baseScript._moveScript.ReceivedMoveOrder(datas._erasePreviousOrders, datas._posTarget);
         }
+        else if (datas._orderType == TypeOrder.Attack)
+        {
+            _baseScript._attackScript.ReceivedAttackOrder(datas._entityTarget);
+        }
     }
 }

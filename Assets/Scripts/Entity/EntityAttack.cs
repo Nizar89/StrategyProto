@@ -12,7 +12,7 @@ public class EntityAttack : MonoBehaviour
 
     private EntityBase _target;
     private EntityBase _baseScript;
-    private float _lastTimeAttack = Time.time;
+    private float _lastTimeAttack = -1f;
     
 
     private void Awake()
@@ -23,6 +23,7 @@ public class EntityAttack : MonoBehaviour
     {
         //Penser à gérer la vision de l'entity, càd si entity not visible, stop movement
         _target = target;
+        StartCoroutine(MoveAndAttack());
     }
 
     IEnumerator MoveAndAttack()
@@ -41,6 +42,7 @@ public class EntityAttack : MonoBehaviour
             //attack if possible
             if ((Time.time - _lastTimeAttack) < _cooldownAttack)
             {
+                _lastTimeAttack = Time.time;
                 Attack();
             }
             yield return new WaitForEndOfFrame();
