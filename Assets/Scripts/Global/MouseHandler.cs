@@ -4,12 +4,15 @@ using System.Collections;
 
 public class MouseHandler : MonoBehaviour
 {
+    //part of mouse control is in script SelectionQuad, because fuck it
+    public static MouseHandler _instance;
+
     public Camera _mainCam;
     public PlayerBase _playerScript;
 	// Use this for initialization
-	void Start ()
+	void Awake ()
     {
-	
+        _instance = this;
 	}
 	
 	// Update is called once per frame
@@ -63,7 +66,7 @@ public class MouseHandler : MonoBehaviour
                 EntityBase entityHit = hit.collider.GetComponent<EntityBase>();
                 if (entityHit._team == PlayerBase._instance._team)
                 {
-                    GameManager._instance.SelectUnit(entityHit);
+                    entityHit._controlScript.SelectUnit();
                 }
                 else //if ship is enemy
                 {

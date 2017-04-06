@@ -28,18 +28,39 @@ public class EntityControls : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-	
-	}
+        CheckIfInSelectionQuad();
+
+    }
     public void SelectUnit()
     {
         _isSelected = true;
         _selectionFeedback.SetActive(true);
+        GameManager._instance._listEntitySelected.Add(this._baseScript);
     }
 
     public void UnselectUnit()
     {
+        GameManager._instance._listEntitySelected.Remove(_baseScript);
         _isSelected = false;
         _selectionFeedback.SetActive(false);
+    }
+
+    private void CheckIfInSelectionQuad()
+    {
+        if (_baseScript._unitRenderer.isVisible && Input.GetMouseButton(0))
+        {
+            Vector3 posOnCam = MouseHandler._instance._mainCam.WorldToScreenPoint(transform.position);
+            posOnCam.y = SelectionQuad._instance.InvertMouseY(posOnCam.y);
+
+            if (SelectionQuad._instance._quad.Contains(posOnCam,true))
+            {
+                SelectUnit();
+            }
+            else if (_isSelected) //if outside of box
+            {
+                UnselectUnit();
+            }
+        }
     }
 
     public void ReceivedNewOrder(OrderScript.OrderDatas datas)

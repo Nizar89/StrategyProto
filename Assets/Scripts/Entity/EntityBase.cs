@@ -32,6 +32,10 @@ public class EntityBase : MonoBehaviour
         {
             _controlScript.enabled = false;
         }
+        else
+        {
+            GameManager._instance._listAlliedEntity.Add(this);
+        }
 
         //set color. Behaviour might change with real model
         SetColors();
@@ -61,6 +65,7 @@ public class EntityBase : MonoBehaviour
 
     public void DestroyEntity() //debug for now
     {
+        GameManager._instance._listAlliedEntity.Remove(this);
         Destroy(this.gameObject);
     }
 }
