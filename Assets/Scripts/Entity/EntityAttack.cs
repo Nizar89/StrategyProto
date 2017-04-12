@@ -28,10 +28,10 @@ public class EntityAttack : MonoBehaviour
 
     IEnumerator MoveAndAttack()
     {
-        while (_target != null && _target.isActiveAndEnabled) // should also stop if new order.
+        while (_target != null && _target.isActiveAndEnabled) // should stop if new order.
         {
             //move to target
-            while (Vector3.Distance(_target.transform.position, this.transform.position) > _distanceAttack)
+            while (Vector3.Distance(_target.transform.position, this.transform.position) > _distanceAttack && _target != null && _target.isActiveAndEnabled)
             {
                 if (_baseScript._navMeshAgent.destination != _target.transform.position)
                 {

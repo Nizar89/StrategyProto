@@ -17,6 +17,8 @@ public class EntityBase : MonoBehaviour
 
     public UnityEngine.AI.NavMeshAgent _navMeshAgent;
 
+    public bool _ordercompleted = true; //when true, will try to do another next order
+
 
 
     // Use this for initialization

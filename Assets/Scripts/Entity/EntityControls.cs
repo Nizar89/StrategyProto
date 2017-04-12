@@ -35,7 +35,10 @@ public class EntityControls : MonoBehaviour
     {
         _isSelected = true;
         _selectionFeedback.SetActive(true);
-        GameManager._instance._listEntitySelected.Add(this._baseScript);
+        if (!GameManager._instance._listEntitySelected.Contains(this._baseScript))
+        {
+            GameManager._instance._listEntitySelected.Add(this._baseScript);
+        }
     }
 
     public void UnselectUnit()
