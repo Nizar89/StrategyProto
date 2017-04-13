@@ -12,6 +12,7 @@ public class CameraControl : MonoBehaviour
     public float _speedSecondMovement = 20f;
     public float _percentageThirdMovement = 5f;
     public float _speedThirdMovement = 30f;
+    public float _speedZoom = 30f;
 
     private float _xMax;
     private float _yMax;
@@ -33,6 +34,8 @@ public class CameraControl : MonoBehaviour
     void Update()
     {
         GetTranslateBasedOnMouse();
+        HandleZoom();
+        MoveCamera();
     }
 
     public void SetScreenLimit() // call when resolution change
@@ -41,6 +44,11 @@ public class CameraControl : MonoBehaviour
         _yMax = Screen.height;
     }
 	
+    private void MoveCamera()
+    {
+        this.transform.Translate((_translateBasedOnMouse + _translateBasedOnInput) * Time.deltaTime, Space.World);
+    }
+
     private void GetTranslateBasedOnMouse()
     {
         _translateBasedOnMouse = new Vector3(0f, 0f, 0f); //Reset value to 0 
@@ -74,6 +82,47 @@ public class CameraControl : MonoBehaviour
         }
 
         // handle y position for tomorrow
+        float percentagePosY = (Input.mousePosition.y / Screen.height) * 100f;
+        //if mouse is near bottom part
+        if (percentagePosY < _percentageThirdMovement)
+        {
+            _translateBasedOnMouse += new Vector3(0f,0f,1f) * -1 * _speedThirdMovement;
+        }
+        else if (percentagePosY < _percentageSecondMovement)
+        {
+            _translateBasedOnMouse += new Vector3(0f, 0f, 1f) * -1 * _speedSecondMovement;
+        }
+        else if (percentagePosY < _percentageFirstMovement)
+        {
+            _translateBasedOnMouse += new Vector3(0f, 0f, 1f) * -1 * _speedSecondMovement;
+        }
+        // if mouse in near top part
+        if ((100 - percentagePosY) <= _percentageThirdMovement)
+        {
+            _translateBasedOnMouse += new Vector3(0f, 0f, 1f) * _speedThirdMovement;
+        }
+        else if ((100 - percentagePosY) <= _percentageSecondMovement)
+        {
+            _translateBasedOnMouse += new Vector3(0f, 0f, 1f) * _speedSecondMovement;
+        }
+        else if ((100 - percentagePosY) <= _percentageFirstMovement)
+        {
+            _translateBasedOnMouse += new Vector3(0f, 0f, 1f) * _speedFirstMovement;
+        }
+
+    }
+
+    private void HandleZoom()
+    {
+        Vector3 pointerVector = MouseHandler._instance._mainCam.ScreenPointToRay(Input.mousePosition).direction;
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            _translateBasedOnMouse += pointerVector * -1f * _speedZoom;
+        } 
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            _translateBasedOnMouse += pointerVector * 1f * _speedZoom;
+        }
     }
 
 }
