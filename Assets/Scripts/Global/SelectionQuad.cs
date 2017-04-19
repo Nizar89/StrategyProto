@@ -7,10 +7,14 @@ public class SelectionQuad : MonoBehaviour
     public static SelectionQuad _instance;
 
     public Texture2D _textureQuad;
+    [HideInInspector]
     public Rect _quad = new Rect(0, 0, 0, 0);
     public Color _colorQuad = new Color(1, 1, 1, 0.5f);
+    [HideInInspector]
+    public float _startClickTime = 0f;
 
-    private Vector3 _startClick = -Vector3.one; 
+    private Vector3 _startClick = -Vector3.one;
+    
 
 	// Use this for initialization
 	void Awake ()
@@ -29,6 +33,7 @@ public class SelectionQuad : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _startClick = Input.mousePosition;
+            _startClickTime = Time.time;
         }
         else if (Input.GetMouseButtonUp(0))
         {

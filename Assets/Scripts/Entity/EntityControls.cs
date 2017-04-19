@@ -50,7 +50,7 @@ public class EntityControls : MonoBehaviour
 
     private void CheckIfInSelectionQuad()
     {
-        if (_baseScript._unitRenderer.isVisible && Input.GetMouseButton(0))
+        if (_baseScript._unitRenderer.isVisible && Input.GetMouseButton(0) && (Time.time - SelectionQuad._instance._startClickTime) > 0.1f)
         {
             Vector3 posOnCam = MouseHandler._instance._mainCam.WorldToScreenPoint(transform.position);
             posOnCam.y = SelectionQuad._instance.InvertMouseY(posOnCam.y);
